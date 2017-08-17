@@ -1,0 +1,70 @@
+
+- name: Create zookeeper group
+  group:
+    name: zookeeper
+    state: present
+  tags: zookeeper
+
+- name: Create zookeeper user
+  user:
+    name: zookeeper
+    group: zookeeper
+  tags: zookeeper
+
+- name: Create zookeeper installation folder
+  file:
+    state: directory
+    path: "{{zookeeper_home_folder}}"
+    owner: zookeeper
+    group: zookeeper
+  tags: zookeeper
+
+- name: Create zookeeper data folder
+  file:
+    state: directory
+    path: "{{zookeeper_data_folder}}"
+    owner: zookeeper
+    group: zookeeper
+  tags: zookeeper
+
+- name: Download zookeeper
+  get_url:
+    url: "{{zookeeper_download_url}}"
+    dest: "/tmp/{{zookeeper_archive_filename}}"
+  tags: zookeeper
+
+- name: Unarchive zookeeper
+  unarchive:
+    src: "/tmp/{{zookeeper_archive_filename}}"
+    dest: "{{zookeeper_home_folder}}"
+    extra_opts: ['--strip-components=1']
+    remote_src: true
+  tags: zookeeper
+
+- name: Copy zookeeper conf file
+  template:
+    src: "zoo.cfg"
+    dest: "{{zookeeper_home_folder}}/conf/zoo.cfg"
+  notify: restart zookeeper
+  tags: zookeeper
+
+- name: Copy zookeeper myid
+  template:
+    src: myid
+    dest: "{{zookeeper_data_folder}}/myid"
+  notify: restart zookeeper
+  tags: zookeeper
+
+- name: Create zookeeper service file
+  template:
+    src: zookeeper.service.j2
+    dest: /etc/systemd/system/zookeeper.service
+    owner: root
+    group: root
+    mode: 644
+  tags: zookeeper
+
+- name: Reload systemd
+  command: systemctl daemon-reload
+  notify: start zookeeper
+  tags: zookeeper

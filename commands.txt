@@ -1,0 +1,4 @@
+/opt/kafka/bin/kafka-topics.sh --create --zookeeper kafka1:2181 --replication-factor 3 --partitions 3 --topic songs
+/opt/kafka/bin/kafka-console-consumer.sh --bootstrap-server kafka1:9192 --topic songs --from-beginning
+/opt/kafka/bin/kafka-topics.sh --zookeeper kafka1:2181 --delete --topic songs
+/opt/kafka/bin/kafka-topics.sh --zookeeper kafka1:2181 --list

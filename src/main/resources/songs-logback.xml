@@ -1,0 +1,25 @@
+<included>
+    <appender name="SONGS_CONSUMER_APPENDER" class="ch.qos.logback.core.FileAppender">
+        <file>${consumers.output.path}/songs_consumer.log</file>
+        <param name="Append" value="false"/>
+        <encoder>
+            <pattern>%msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="SONGS_BATCH_CONSUMER_APPENDER" class="ch.qos.logback.core.FileAppender">
+        <file>${consumers.output.path}/songs_batch_consumer.log</file>
+        <param name="Append" value="false"/>
+        <encoder>
+            <pattern>%msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <logger name="SONGS_CONSUMER_LOGGER" level="info" additivity="false">
+        <appender-ref ref="SONGS_CONSUMER_APPENDER"/>
+    </logger>
+
+    <logger name="SONGS_BATCH_CONSUMER_LOGGER" level="info" additivity="false">
+        <appender-ref ref="SONGS_BATCH_CONSUMER_APPENDER"/>
+    </logger>
+</included>

@@ -1,0 +1,30 @@
+
+- name: Disable firewalld
+  service: name=firewalld state=stopped enabled=no
+  ignore_errors: True
+
+- name: Remove own host from 127.0.1.1 aliases
+  lineinfile:
+    dest: /etc/hosts
+    state: absent
+    regexp: '^(127\.0.*){{inventory_hostname}}(.*)$'
+
+- name: Install the required dependencies
+  action: "{{ansible_pkg_mgr}} name={{item}} state=installed"
+  with_items:
+    - net-tools
+    - wget
+    - tar
+    - unzip
+    - vim
+
+- name: Copy ca-certs.zip file to the CA certs folder
+  copy:
+    src: files/ca-certs.zip
+    dest: /tmp
+
+- name: Unarchive ca-certs.zip
+  unarchive:
+    src: /tmp/ca-certs.zip
+    dest: /tmp
+    remote_src: true

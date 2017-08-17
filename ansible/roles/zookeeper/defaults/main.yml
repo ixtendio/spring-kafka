@@ -1,0 +1,7 @@
+---
+
+zookeeper_version: '3.4.9'
+zookeeper_download_url: 'http://www-eu.apache.org/dist/zookeeper/zookeeper-{{zookeeper_version}}/zookeeper-{{zookeeper_version}}.tar.gz'
+zookeeper_archive_filename: 'zookeeper.tar.gz'
+zookeeper_data_folder: '/var/zookeeper'
+zookeeper_home_folder: '/opt/zookeeper'

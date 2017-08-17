@@ -1,0 +1,8 @@
+---
+- hosts: kafka1,kafka2,kafka3
+  become: true
+  roles:
+    - role: common
+    - role: java
+    - role: zookeeper
+    - role: kafka

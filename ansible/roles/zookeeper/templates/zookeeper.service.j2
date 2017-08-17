@@ -1,0 +1,17 @@
+# SService file for Zookeeper
+[Unit]
+Description=Zookeeper {{zookeeper_version}}
+After=network.target
+
+[Service]
+Type=forking
+User=zookeeper
+Environment='ZOO_LOG_DIR={{zookeeper_data_folder}}/log'
+Environment='JAVA_HOME=/usr/java/jdk'
+WorkingDirectory={{zookeeper_home_folder}}
+ExecStart={{zookeeper_home_folder}}/bin/zkServer.sh start
+ExecStop={{zookeeper_home_folder}}/bin/zkServer.sh stop
+Restart=on-abort
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,36 @@
+
+- name: Download Oracle JDK RPM
+  get_url:
+    url: "{{oracle_java_rpm_url}}"
+    dest: "/tmp/{{oracle_java_rpm_filename}}"
+    headers: 'Cookie:oraclelicense=accept-securebackup-cookie'
+    timeout: 30
+  register: task_oracle_java_rpm_download
+  tags:
+    - download
+
+- name: Install Oracle JDK RPM
+  action: "{{ansible_pkg_mgr}} name=/tmp/{{oracle_java_rpm_filename}} state=present"
+  when: not task_oracle_java_rpm_download|skipped
+  tags:
+    - installation
+
+- name: Set Oracle Java version as default
+  alternatives:
+    name="{{item.exe}}"
+    link="/usr/bin/{{item.exe}}"
+    path="{{item.path}}/{{item.exe}}"
+  with_items:
+    - {path: "{{oracle_java_home}}/jre/bin", exe: 'java'}
+    - {path: "{{oracle_java_home}}/jre/bin", exe: 'keytool'}
+    - {path: "{{oracle_java_home}}/bin", exe: 'javac'}
+    - {path: "{{oracle_java_home}}/bin", exe: 'javadoc'}
+  register: task_oracle_java_set_default
+  tags:
+    - installation
+
+- name: Setup Oracle JDK symlink
+  file:
+    src: "{{oracle_java_home}}"
+    dest: /usr/java/jdk
+    state: link

@@ -1,0 +1,37 @@
+<included>
+    <appender name="MOVIES_CONSUMER_APPENDER" class="ch.qos.logback.core.FileAppender">
+        <file>${consumers.output.path}/movies_consumer.log</file>
+        <param name="Append" value="false"/>
+        <encoder>
+            <pattern>%msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="MOVIES_BATCH_CONSUMER_APPENDER" class="ch.qos.logback.core.FileAppender">
+        <file>${consumers.output.path}/movies_batch_consumer.log</file>
+        <param name="Append" value="false"/>
+        <encoder>
+            <pattern>%msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="MOVIES_THRILLER_CONSUMER_APPENDER" class="ch.qos.logback.core.FileAppender">
+        <file>${consumers.output.path}/movies_thriller_consumer.log</file>
+        <param name="Append" value="false"/>
+        <encoder>
+            <pattern>%msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <logger name="MOVIES_CONSUMER_LOGGER" level="info" additivity="false">
+        <appender-ref ref="MOVIES_CONSUMER_APPENDER"/>
+    </logger>
+
+    <logger name="MOVIES_BATCH_CONSUMER_LOGGER" level="info" additivity="false">
+        <appender-ref ref="MOVIES_BATCH_CONSUMER_APPENDER"/>
+    </logger>
+
+    <logger name="MOVIES_THRILLER_CONSUMER_LOGGER" level="info" additivity="false">
+        <appender-ref ref="MOVIES_THRILLER_CONSUMER_APPENDER"/>
+    </logger>
+</included>

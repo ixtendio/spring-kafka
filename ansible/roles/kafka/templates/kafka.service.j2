@@ -1,0 +1,16 @@
+# SService file for Kafka
+[Unit]
+Description=Kafka {{kafka_version}}
+After=network.target zookeeper.service
+
+[Service]
+Type=forking
+User=kafka
+Environment='JAVA_HOME=/usr/java/jdk'
+WorkingDirectory={{kafka_home_folder}}
+ExecStart={{kafka_home_folder}}/bin/kafka-server-start.sh -daemon {{kafka_home_folder}}/config/server-distributed.properties
+ExecStop={{kafka_home_folder}}/bin/kafka-server-stop.sh
+Restart=on-abort
+
+[Install]
+WantedBy=multi-user.target

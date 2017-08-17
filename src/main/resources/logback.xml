@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="60 seconds">
+
+    <appender name="DEFAULT_LOG" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{ISO8601} [%thread] %level %class %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <root level="info">
+        <appender-ref ref="DEFAULT_LOG"/>
+    </root>
+
+    <include resource="songs-logback.xml"/>
+    <include resource="movies-logback.xml"/>
+
+</configuration>
